@@ -21,6 +21,17 @@ public class GeneralPurposeRegister extends Storage
         this.value = new char[this.size/4];
         Arrays.fill(this.value,'0');
     }
+
+    public  boolean hasHighSubRegister(String name)
+    {
+        return name.equalsIgnoreCase(this.highName);
+    }
+
+    public  boolean hasLowSubRegister(String name)
+    {
+        return name.equalsIgnoreCase(this.lowName);
+    }
+
     public  String getValue()
     {
         return new String(this.value);
@@ -28,11 +39,51 @@ public class GeneralPurposeRegister extends Storage
     public void load(String val)
     {
         String hexVal = this.toHex(val);
-        int endPos = this.value.length-1;
-        for(int i = hexVal.length()-1; i >= 0; i--)
+        int decVal = Integer.parseInt(hexVal, 16);
+        if(decVal < Math.pow(2, this.size) && decVal >= (Math.pow(2,this.size-1)*-1)) {
+            int endPos = this.value.length - 1;
+            for (int i = this.value.length - 1; i >= 0; i--) {
+                this.value[endPos] = hexVal.charAt(endPos);
+                endPos--;
+            }
+        }
+        else
         {
-            this.value[endPos] = hexVal.charAt(i);
-            endPos --;
+            System.err.println( "Value too big..." );
+        }
+    }
+
+    public void loadHigh(String val)
+    {
+        String hexVal = this.toHex(val);
+        int decVal = Integer.parseInt(hexVal, 16);
+        if(decVal < Math.pow(2,this.size/2) && decVal >= (Math.pow(2,this.size/2-1)*-1)) {
+            int endPos = this.value.length - 1;
+            for (int i = this.value.length/2 - 1; i >= 0; i--) {
+                this.value[endPos] = hexVal.charAt(endPos);
+                endPos--;
+            }
+        }
+        else
+        {
+            System.err.println( "Value too big..." );
+        }
+    }
+
+    public void loadLow(String val)
+    {
+        String hexVal = this.toHex(val);
+        int decVal = Integer.parseInt(hexVal, 16);
+        if(decVal < Math.pow(2,this.size/2) && decVal >= (Math.pow(2,this.size/2-1)*-1)) {
+            int endPos = this.value.length - 1;
+            for (int i = this.value.length/2 - 1; i >= this.value.length/2; i--) {
+                this.value[endPos] = hexVal.charAt(endPos);
+                endPos--;
+            }
+        }
+        else
+        {
+            System.err.println( "Value too big..." );
         }
     }
 }

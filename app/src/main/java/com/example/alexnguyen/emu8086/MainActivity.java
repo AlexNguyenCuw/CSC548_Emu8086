@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity
         this.bxRegTV = (TextView)this.findViewById(R.id.bxRegTV);
         this.cxRegTV = (TextView)this.findViewById(R.id.cxRegTV);
         this.dxRegTV = (TextView)this.findViewById(R.id.dxRegTV);
+        this.showRegisterValue();
     }
 
 
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity
         String entry = this.instructionET.getText().toString();
         LinkedList<String> parts = this.getParts(entry);
         CPU.processInstruction(parts);
-
+        this.showRegisterValue();
 
     }
     private void showRegisterValue()

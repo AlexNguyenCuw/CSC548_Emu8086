@@ -1,6 +1,5 @@
 package com.example.alexnguyen.emu8086;
 
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -27,7 +26,29 @@ public class CPU
             if(dest == null)
             {
                 // dest must be a variable location instread of a register
+                boolean placed = false;
+                for(Storage s : registers.values())
+                {
+                    if(s instanceof GeneralPurposeRegister)
+                    {
+                        if (((GeneralPurposeRegister)s).hasHighSubRegister(parts.get(1).toLowerCase()))
+                        {
+                            ((GeneralPurposeRegister)s).loadHigh(parts.get(2).toLowerCase());
+                            placed = true;
+                            break;
+                        }
+                        else if (((GeneralPurposeRegister)s).hasLowSubRegister(parts.get(1).toLowerCase()))
+                        {
+                            ((GeneralPurposeRegister)s).loadLow(parts.get(2).toLowerCase());
+                            placed = true;
+                            break;
+                        }
+                    }
+                }
+                if (!placed)
+                {
 
+                }
             }
             else
             {
